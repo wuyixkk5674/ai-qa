@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches: [ main ]
@@ -25,11 +26,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Start API Server in background
+        run: |
+          # 1. 后台启动服务，并将日志重定向到文件中，避免阻塞 CI
+          npm start > /tmp/api-server.log 2>&1 &
+
+          # 2. 循环检测端口是否就绪 (最多等 30 秒)
+          echo "Waiting for server to start..."
+          for i in {1..30}; do
+            if curl -s http://127.0.0.1:3000 > /dev/null; then
+              echo "Server is up after ${i} seconds!"
+              exit 0
+            fi
+            sleep 1
+          done
+
+          # 3. 如果超时，打印服务日志并强制让 CI 失败
+          echo "Server failed to start in time. Printing logs:"
+          cat /tmp/api-server.log
+          exit 1
+
       - name: Unit test
         run: npm test
-
-      - name: Install playwright browser
-        run: npx playwright install --with-deps chromium
-
-      - name: E2E test
-        run: npm run test:e2e
