@@ -1,0 +1,8 @@
+node_modules/
+test-results/
+.screenshots/
+screenshots/
+.env
+.DS_Store
+Thumbs.db
+npm-debug.log*

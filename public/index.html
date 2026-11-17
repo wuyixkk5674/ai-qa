@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 答疑助手 · 人工智能导论</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark">AI</span>
+        <div>
+          <h1>AI 答疑助手</h1>
+          <p class="brand-sub">基于课程资料作答 · 人工智能导论</p>
+        </div>
+      </div>
+      <span id="modeBadge" class="badge" title="当前运行模式">加载中…</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <label class="label" for="question">请输入你的问题</label>
+      <textarea
+        id="question"
+        class="textarea"
+        rows="4"
+        maxlength="2000"
+        placeholder="例如：监督学习和无监督学习有什么区别？"
+        data-testid="ask-input"
+      ></textarea>
+
+      <div class="toolbar">
+        <span id="counter" class="counter">0 / 2000</span>
+        <div class="toolbar-actions">
+          <button id="clearBtn" class="btn btn-ghost" type="button">清空</button>
+          <button id="askBtn" class="btn btn-primary" type="button" data-testid="ask-button">提交提问</button>
+        </div>
+      </div>
+
+      <p id="errorText" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="answerCard" class="panel answer-panel" hidden data-testid="answer-panel">
+      <div class="answer-head">
+        <h2>回答</h2>
+        <span id="answerMeta" class="meta" data-testid="answer-meta"></span>
+      </div>
+      <div id="answerBody" class="answer-body" data-testid="answer-text"></div>
+      <div id="sourcesBox" class="sources" hidden>
+        <span class="sources-label">参考资料</span>
+        <div id="sourcesList" class="source-list"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="answer-head">
+        <h2>最近问答</h2>
+        <button id="refreshBtn" class="btn btn-ghost btn-small" type="button">刷新</button>
+      </div>
+      <ul id="historyList" class="history" data-testid="history-list">
+        <li class="history-empty">暂无记录</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">回答由大模型依据课程资料生成，如与课堂讲授不一致，请联系助教确认。</footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
